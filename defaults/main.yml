@@ -1,0 +1,29 @@
+---
+wikijs_ports:
+  - "{{ wikijs_http_port|default(3000) }}:3000"
+# - "{{ wikijs_https_port|default(3443) }}:3443"
+
+wikijs_data_dir: /var/lib/wikijs
+wikijs_volumes:
+ - "{{ wikijs_data_dir }}:/wiki/data/content"
+#- ./wikijs/content:/wiki/data/content
+#- /var/run/postgresql:/var/run/postgresql
+
+# Vars for wikijs container
+wikijs_image: ghcr.io/requarks/wiki
+wikijs_name: wikijs
+wikijs_version: 2
+
+# https://docs.requarks.io/install/docker
+wikijs_config:
+  DB_TYPE: sqlite
+  DB_FILEPATH: /wiki/data/database.sqlite
+# DB_TYPE: postgres
+# DB_HOST: host.containers.internal
+# DB_PORT: 5432
+# DB_NAME: wikijs
+# DB_USER: wikijs
+# DB_PASS: ''
+# DB_SSL: false
+# DB_SSL_CA:
+# DB_PASS_FILE:

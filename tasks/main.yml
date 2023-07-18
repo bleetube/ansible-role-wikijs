@@ -1,0 +1,23 @@
+---
+- name: Assert that we are not logged in as root
+  assert:
+    that:
+      - ansible_user_id != 'root'
+    fail_msg: "Podman containers are rootless, so please do not run this role as root."
+
+- debug:
+    var: wikijs_data_dir
+- name: Assert that a data is configured.
+  assert:
+    that:
+      - wikijs_data_dir != ''
+    fail_msg: "Please set wikijs_data_dir to a valid directory."
+
+- name: Ensure wikijs data dir exists.
+  file:
+    path: "{{ wikijs_data_dir }}"
+    state: directory
+    mode: '0755'
+
+- import_tasks: podman.yml
+- import_tasks: systemd.yml

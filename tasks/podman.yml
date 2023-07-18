@@ -1,0 +1,32 @@
+---
+#- name: Wiki.js | Build image
+#  register: podman_image_output
+#  containers.podman.podman_image:
+#    name: requarks/wiki
+#    path: ~/src/wiki
+#    tag: "wikijs-{{ wikijs_version }}"
+#    validate_certs: true
+#    pull: false
+#    state: build
+#    build:
+#      file: ~/src/wiki/dev/containers/Dockerfile
+
+#- ansible.builtin.debug:
+#    var: podman_image_output
+
+# https://github.com/requarks/wiki/blob/main/dev/build/Dockerfile
+- name: Wiki.js | Create container
+  containers.podman.podman_container:
+    debug: no 
+    image: "{{ wikijs_image }}:{{ wikijs_version }}"
+    image_strict: yes
+    recreate: yes
+    state: present
+    name: "{{ wikijs_name }}"
+    env: "{{ wikijs_config }}"
+    volume: "{{ wikijs_volumes }}"
+    ports: "{{ wikijs_ports }}"
+  register: podman_output
+
+- ansible.builtin.debug:
+    var: podman_output
