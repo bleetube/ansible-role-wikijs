@@ -12,3 +12,8 @@ ssh root@${TARGET} "doas -u postgres /usr/bin/pg_dump -Fc wikijs | /usr/bin/bzip
 mkdir -p $HOME/archive/${TARGET}/postgresql/
 rsync -tav ${TARGET}:${DUMP_FILE} $HOME/archive/${TARGET}/postgresql/
 ssh root@${TARGET} rm -v ${DUMP_FILE}
+
+# restore
+#su - postgres
+# dropdb wikijs; createdb wikijs
+#bzcat wikijs_*.dump.bz2 | pg_restore -d wikijs
