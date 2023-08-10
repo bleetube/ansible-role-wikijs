@@ -16,3 +16,5 @@ Example using [alvistack/ansible-role-podman](https://github.com/alvistack/ansib
         cmd: "loginctl enable-linger {{ sysadmin_username }}"
         creates: "/var/lib/systemd/linger/{{ sysadmin_username }}"
 ```
+
+Depending on the OS version you're using, you may have to account for the usage of deprecated apt-key functionality.
